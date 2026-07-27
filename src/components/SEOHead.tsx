@@ -120,7 +120,23 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     description:
       "Build a UK-style ATS-friendly CV and tailored cover letter in seconds — free, no signup. Optimised for care workers, healthcare assistants, nurses, hospitality, warehouse and Skilled Worker visa applicants.",
   },
+  "/cover-letter": {
+    title: "Free AI Cover Letter Generator for UK Jobs 2026 | CareHomeStaffUK",
+    description:
+      "Generate a tailored, ATS-friendly UK cover letter for care, NHS, hospitality and Skilled Worker visa roles. Free, instant, no signup required.",
+  },
+  "/sponsor-companies": {
+    title: "UK CoS Sponsors Directory 2026 | Licensed Care Home Sponsors — CareHomeStaffUK",
+    description:
+      "Directory of UK Home Office licensed Certificate of Sponsorship (CoS) care providers hiring international carers, HCAs and senior care workers under the Health & Care Worker visa. Updated for 2026.",
+  },
+  "/cos-sponsors": {
+    title: "Licensed CoS Sponsors UK 2026 | Care Home Visa Sponsors List",
+    description:
+      "Browse UK care companies with an active Home Office sponsor licence issuing Certificates of Sponsorship (CoS) for the Health & Care Worker visa. Apply through CareHomeStaffUK.",
+  },
 };
+
 
 export function SEOHead() {
   const { pathname } = useLocation();
@@ -183,6 +199,30 @@ export function SEOHead() {
     ],
   } : null;
 
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      ...(pathname !== "/"
+        ? [{ "@type": "ListItem", position: 2, name: meta.title.split("|")[0]!.trim(), item: canonicalUrl }]
+        : []),
+    ],
+  };
+
+  const websiteLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    url: SITE_URL,
+    name: SITE_NAME,
+    inLanguage: "en-GB",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${SITE_URL}/jobs?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <Helmet>
       <title>{meta.title}</title>
@@ -193,6 +233,13 @@ export function SEOHead() {
       <meta name="geo.region" content="GB" />
       <meta name="geo.placename" content="United Kingdom" />
       <meta name="language" content="English" />
+      <meta httpEquiv="content-language" content="en-GB" />
+      <meta name="rating" content="general" />
+      <meta name="revisit-after" content="1 days" />
+      <meta name="target" content="all" />
+      <meta name="audience" content="international care workers, UK visa applicants, migrants, PSW switchers" />
+      <meta name="coverage" content="Worldwide" />
+      <meta name="distribution" content="global" />
 
       <meta property="og:title" content={meta.title} />
       <meta property="og:description" content={meta.description} />
@@ -200,15 +247,20 @@ export function SEOHead() {
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="en_GB" />
+      <meta property="og:locale:alternate" content="en_US" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={meta.title} />
       <meta name="twitter:description" content={meta.description} />
+      <meta name="twitter:site" content="@CareHomeStaffUK" />
 
       <meta name="keywords" content={GLOBAL_KEYWORDS} />
 
       <script type="application/ld+json">{JSON.stringify(orgJsonLd)}</script>
+      <script type="application/ld+json">{JSON.stringify(websiteLd)}</script>
+      <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       {faqJsonLd && <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>}
     </Helmet>
   );
 }
+
