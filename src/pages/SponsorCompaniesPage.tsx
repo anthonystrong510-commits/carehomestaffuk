@@ -52,12 +52,12 @@ const SponsorCompaniesPage = () => {
               UK Companies Offering Certificate of Sponsorship
             </h1>
             <p className="text-hero-foreground/80 max-w-2xl mx-auto">
-              These UK employers are certified by the Home Office to issue Certificates of Sponsorship for Health and Care Worker visa applicants. Submit one general eligibility check below — our team privately reviews your profile and confidentially matches you to the right licensed sponsor.
+              These UK employers are certified by the Home Office to issue Certificates of Sponsorship for Health and Care Worker visa applicants. Submit one general CoS application below — our team privately reviews your profile and confidentially matches you to the right licensed sponsor.
             </p>
             <div className="flex flex-wrap gap-2 justify-center pt-2">
               <Link to="/apply">
                 <Button size="lg" className="bg-hero-accent text-hero-foreground hover:bg-hero-accent/90">
-                  Check eligibility & register interest <ArrowRight className="h-4 w-4 ml-2" />
+                  Apply for CoS <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </Link>
             </div>
@@ -134,12 +134,12 @@ const SponsorCompaniesPage = () => {
           <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 text-center mt-6">
             <h2 className="font-heading text-xl font-semibold mb-2">How matching works</h2>
             <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-4">
-              You submit one general eligibility check. Our advisors review your background and confidentially introduce you to the best-fit licensed UK sponsor. You'll receive the matched employer's details by email — there's no need to contact companies directly.
+              You submit one general CoS application. Our advisors review your background and confidentially introduce you to the best-fit licensed UK sponsor. You'll receive the matched employer's details by email — there's no need to contact companies directly.
             </p>
             <div className="flex flex-wrap gap-2 justify-center">
               <Link to="/apply">
                 <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                  Check eligibility & register interest <ArrowRight className="h-4 w-4 ml-2" />
+                  Apply for CoS <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </Link>
             </div>
