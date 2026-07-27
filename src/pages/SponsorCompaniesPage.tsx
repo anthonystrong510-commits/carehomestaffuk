@@ -52,12 +52,12 @@ const SponsorCompaniesPage = () => {
               UK Companies Offering Certificate of Sponsorship
             </h1>
             <p className="text-hero-foreground/80 max-w-2xl mx-auto">
-              These UK employers are certified by the Home Office to issue Certificates of Sponsorship for Health and Care Worker visa applicants. Submit one general eligibility check below — our team privately reviews your profile and confidentially matches you to the right licensed sponsor.
+              These UK employers are certified by the Home Office to issue Certificates of Sponsorship for Health and Care Worker visa applicants. Submit one general CoS application below — our team privately reviews your profile and confidentially matches you to the right licensed sponsor.
             </p>
             <div className="flex flex-wrap gap-2 justify-center pt-2">
               <Link to="/apply">
                 <Button size="lg" className="bg-hero-accent text-hero-foreground hover:bg-hero-accent/90">
-                  Check eligibility & register interest <ArrowRight className="h-4 w-4 ml-2" />
+                  Apply for CoS <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </Link>
             </div>
