@@ -528,7 +528,7 @@ export const defaultSiteSettings: SiteSettings = {
     enabled: true,
     message: '✦ Browse UK companies that offer Certificate of Sponsorship — apply directly from one place.',
     link: '/sponsor-companies',
-    ctaLabel: 'Check eligibility',
+    ctaLabel: 'Apply for CoS',
     variant: 'info',
   },
   disabledLocations: [],
