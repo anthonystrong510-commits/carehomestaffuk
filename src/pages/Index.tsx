@@ -93,6 +93,63 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Skilled Worker Visa — informational strip */}
+      <section className="py-16 border-t bg-background">
+        <div className="container space-y-10">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="inline-block text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary px-3 py-1 rounded-full mb-3">
+              Skilled Worker &amp; Health and Care Worker Visa
+            </span>
+            <h2 className="font-heading text-2xl font-bold mb-2">Your Route to Working in the UK</h2>
+            <p className="text-muted-foreground text-sm">
+              Care roles sit on the UK Immigration Salary List, which means licensed sponsors can issue a
+              Certificate of Sponsorship (CoS) to eligible overseas workers. Here's what that means for you.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                title: "Certificate of Sponsorship",
+                desc: "A CoS is an electronic reference number from a licensed sponsor — not a paper document. You need it before applying for your visa, and it must match your exact job and salary.",
+              },
+              {
+                title: "Eligible Care Occupations",
+                desc: "SOC 6131 (Nursing Auxiliaries), SOC 6135 (Care Workers & Home Carers) and SOC 6136 (Senior Care Workers) all qualify for the Health and Care Worker visa with reduced fees.",
+              },
+              {
+                title: "Already in the UK? Switch Visas",
+                desc: "Graduate (PSW), Student and Dependant visa holders can usually switch into a Skilled Worker route without leaving the UK once they have a genuine CoS offer.",
+              },
+              {
+                title: "Health and Care Visa Perks",
+                desc: "Lower application fees, no Immigration Health Surcharge, fast-track decisions, and your partner and children can join you as dependants.",
+              },
+            ].map((c, i) => (
+              <div key={i} className="rounded-lg border bg-card p-6 space-y-2 hover:border-primary transition">
+                <h3 className="font-heading font-semibold">{c.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{c.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="rounded-lg border bg-secondary p-6 flex flex-col md:flex-row items-start md:items-center gap-4 justify-between">
+            <div className="text-sm space-y-1">
+              <p className="font-semibold">Not sure if you qualify?</p>
+              <p className="text-muted-foreground">
+                Apply for CoS through our sponsor network, or read the full visa guide first — both are free.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Link to="/sponsor-companies">
+                <Button className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold">Apply for CoS</Button>
+              </Link>
+              <Link to="/visa-info">
+                <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">Read the Visa Guide</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features */}
       <section className="py-16 bg-secondary">
         <div className="container">
