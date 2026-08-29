@@ -147,6 +147,7 @@ export function WhatsAppButton({ hidden = false }: { hidden?: boolean }) {
           </span>
         </span>
       </button>
+      )}
 
       <Dialog open={gateOpen} onOpenChange={(o) => { setGateOpen(o); if (!o) setPendingCb(null); }}>
         <DialogContent className="sm:max-w-md">
