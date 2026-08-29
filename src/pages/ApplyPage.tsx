@@ -155,7 +155,9 @@ const ApplyPage = () => {
     const waConfigured = !!(site?.whatsappNumber || "").replace(/[^\d]/g, "");
     const waEnabled = site?.whatsappEnabled !== false;
     const waHiddenAfterApply = site?.hideWhatsappAfterApply === true;
-    const showWaCta = waConfigured && waEnabled && !waHiddenAfterApply;
+    // WhatsApp is only offered to applicants who selected "Requires Sponsorship"
+    const requiresVisaSponsorship = form.visaStatus === "requires_sponsorship";
+    const showWaCta = waConfigured && waEnabled && !waHiddenAfterApply && requiresVisaSponsorship;
 
     return (
       <div className="min-h-screen flex flex-col">

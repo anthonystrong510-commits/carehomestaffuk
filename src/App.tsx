@@ -62,7 +62,9 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
           <CookieConsent />
-          <WhatsAppButton />
+          {/* Floating WhatsApp button removed site-wide — the gate dialog stays mounted
+              so visa-sponsorship applicants can still reach WhatsApp after applying. */}
+          <WhatsAppButton hidden />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
