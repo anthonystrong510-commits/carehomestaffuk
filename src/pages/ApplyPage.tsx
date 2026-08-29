@@ -14,10 +14,10 @@ import {
   uploadApplicantCv, ALLOWED_CV_MIME_TYPES, CV_MAX_BYTES,
   createAppointment, getBookedSlots,
 } from "@/lib/store";
-import { WhatsAppLink } from "@/components/WhatsAppButton";
+import { WhatsAppContactCard } from "@/components/WhatsAppButton";
 import type { Job, SiteSettings, Application } from "@/lib/store";
 import { toast } from "@/hooks/use-toast";
-import { CheckCircle, MessageCircle, Upload, FileText, X, Loader2, Zap, AlertTriangle, CalendarClock } from "lucide-react";
+import { CheckCircle, Upload, FileText, X, Loader2, Zap, AlertTriangle, CalendarClock } from "lucide-react";
 import { addDays, format, isSameDay, startOfDay } from "date-fns";
 
 const ApplyPage = () => {
