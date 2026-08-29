@@ -120,6 +120,7 @@ export function WhatsAppButton({ hidden = false }: { hidden?: boolean }) {
 
   return (
     <>
+      {!hidden && (
       <button
         type="button"
         onClick={handleClick}
