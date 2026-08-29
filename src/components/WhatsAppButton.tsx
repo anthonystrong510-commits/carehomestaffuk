@@ -72,7 +72,7 @@ export function WhatsAppLink({ children, className }: { children: ReactNode; cla
   );
 }
 
-export function WhatsAppButton() {
+export function WhatsAppButton({ hidden = false }: { hidden?: boolean }) {
   const [number, setNumber] = useState("");
   const [label, setLabel] = useState("Chat with us on WhatsApp");
   const [enabled, setEnabled] = useState(true);
