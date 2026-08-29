@@ -186,13 +186,7 @@ const ApplyPage = () => {
             />
 
             {showWaCta && (
-              <div className="text-center pt-2">
-                <WhatsAppLink className="inline-flex">
-                  <Button size="lg" className="bg-[#25D366] hover:bg-[#1ebe5a] text-white" asChild={false}>
-                    <span className="inline-flex items-center"><MessageCircle className="h-5 w-5 mr-2" /> Message us on WhatsApp</span>
-                  </Button>
-                </WhatsAppLink>
-              </div>
+              <WhatsAppContactCard number={site?.whatsappNumber || ""} />
             )}
           </div>
         </main>
@@ -500,14 +494,10 @@ function PostApplyAppointmentStep({
           <Button variant="outline" size="sm" asChild>
             <a href="/appointments/manage">Reschedule or cancel</a>
           </Button>
-          {whatsappNumber && (
-            <WhatsAppLink className="inline-flex">
-              <Button size="sm" className="bg-[#25D366] hover:bg-[#1ebe5a] text-white" asChild={false}>
-                <span className="inline-flex items-center"><MessageCircle className="h-4 w-4 mr-1.5" /> WhatsApp us</span>
-              </Button>
-            </WhatsAppLink>
-          )}
         </div>
+        {whatsappNumber && (
+          <WhatsAppContactCard number={whatsappNumber} />
+        )}
       </div>
     );
   }
