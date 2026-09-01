@@ -1,4 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
+import { cacheSiteOrigin } from "@/lib/seo";
+
 
 export interface Job {
   id: string;
