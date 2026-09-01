@@ -1,4 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
+import { cacheSiteOrigin } from "@/lib/seo";
+
 
 export interface Job {
   id: string;
@@ -80,7 +82,10 @@ export interface SMTPSettings {
 export interface SEOSettings {
   searchConsoleId: string;
   searchKeywords: string[];
+  /** Live public domain used for canonicals, og:url, JSON-LD and sitemap links. */
+  siteDomain?: string;
 }
+
 
 export interface SiteSettings {
   siteName: string;
@@ -464,9 +469,15 @@ export async function saveSMTPSettings(settings: SMTPSettings) { await saveSetti
 
 export async function getSEOSettings(): Promise<SEOSettings> {
   const value = await getSetting('seo');
-  return value || { searchConsoleId: '', searchKeywords: [] };
+  const out: SEOSettings = { searchConsoleId: '', searchKeywords: [], siteDomain: '', ...(value || {}) };
+  cacheSiteOrigin(out.siteDomain);
+  return out;
 }
-export async function saveSEOSettings(settings: SEOSettings) { await saveSetting('seo', settings); }
+export async function saveSEOSettings(settings: SEOSettings) {
+  cacheSiteOrigin(settings.siteDomain);
+  await saveSetting('seo', settings);
+}
+
 
 export const defaultSiteSettings: SiteSettings = {
   siteName: 'CareHomeStaffUK',

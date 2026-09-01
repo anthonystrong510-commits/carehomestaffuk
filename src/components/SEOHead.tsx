@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
+import { getSiteOrigin, absoluteUrl } from "@/lib/seo";
+import { getSEOSettings } from "@/lib/store";
 
-const SITE_URL = "https://carehomestaffuk.com";
 const SITE_NAME = "CareHomeStaffUK";
 
 // Master keyword pool — UK Health & Care Worker visa, all sponsorship pathways, all roles,
@@ -18,26 +20,31 @@ const GLOBAL_KEYWORDS = [
   "care home jobs with visa sponsorship", "UK visa sponsorship jobs",
   "Health and Care Worker visa", "Tier 2 health and care visa",
   "Skilled Worker visa care worker", "Certificate of Sponsorship UK",
-  "CoS care worker UK", "sponsored care jobs UK", "free CoS care jobs UK",
-  "care jobs no agency fee UK", "sponsored healthcare assistant UK",
+  "apply for CoS UK", "CoS care worker UK", "sponsored care jobs UK",
+  "free CoS care jobs UK", "care jobs no agency fee UK", "sponsored healthcare assistant UK",
+  "UK sponsor licence register care homes", "licensed sponsors list UK care",
   "SOC 6131", "SOC 6135", "SOC 6136", "SOC 6145", "SOC 6146",
   // Audience: migrants & switch routes
   "PSW to skilled worker visa UK", "graduate visa to health care worker visa",
   "switch student visa to care worker visa UK", "Tier 4 to Tier 2 switch UK",
   "dependant visa care work UK", "spouse visa care worker UK",
-  "BRP holder care jobs UK", "EU pre-settled status care jobs",
-  "refugee care worker jobs UK", "asylum seeker work permit care UK",
-  "international nurse OSCE jobs UK", "overseas nurse UK NMC",
+  "BRP holder care jobs UK", "eVisa UKVI account care jobs",
+  "EU pre-settled status care jobs", "refugee care worker jobs UK",
+  "asylum seeker work permit care UK", "international nurse OSCE jobs UK",
+  "overseas nurse UK NMC", "immigrants UK jobs with sponsorship",
   "Nigeria to UK care work visa", "India to UK care worker visa",
   "Philippines to UK nurse visa", "Ghana to UK care worker",
   "Kenya to UK care worker visa", "Zimbabwe to UK care worker visa",
   "Pakistan to UK care worker visa", "Bangladesh to UK care worker visa",
-  "Nepal to UK care worker visa",
+  "Nepal to UK care worker visa", "Sri Lanka to UK care visa",
   // Questions people ask
   "how to get UK care worker visa", "how to find a care home sponsor UK",
-  "minimum salary care worker visa UK", "how long does CoS take UK",
-  "can care workers bring family UK", "care worker visa requirements 2026",
-  "do I need IELTS for care worker visa", "is care worker job in UK shortage occupation",
+  "how to apply for a Certificate of Sponsorship", "minimum salary care worker visa UK",
+  "how long does CoS take UK", "can care workers bring family UK",
+  "care worker visa requirements 2026", "do I need IELTS for care worker visa",
+  "is care worker job in UK shortage occupation", "how much does a CoS cost UK",
+  "can I switch from visitor visa to skilled worker UK",
+  "care worker visa refusal reasons UK", "how to check if a company is a licensed sponsor",
   // Locations
   "care jobs London", "care jobs Manchester", "care jobs Birmingham",
   "care jobs Liverpool", "care jobs Leeds", "care jobs Sheffield",
@@ -60,20 +67,35 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     description:
       "Browse live UK care jobs with visa sponsorship — care assistants, senior carers, HCAs and nursing auxiliaries. Filter by city, SOC code and salary. Sponsored roles for international applicants & PSW switchers.",
   },
-  "/jobs/": {
-    title: "UK Care Worker Vacancies with Visa Sponsorship | Browse Jobs",
+  "/care-worker-jobs-with-visa-sponsorship": {
+    title: "Care Worker Jobs with Visa Sponsorship UK 2026 | Sponsored Vacancies",
     description:
-      "Live UK care jobs with Health & Care Worker visa sponsorship. Care homes hiring across England, Scotland and Wales.",
+      "Live care worker jobs with UK visa sponsorship in 2026. Licensed sponsors hiring care assistants, senior carers and HCAs on the Health & Care Worker visa across England, Scotland, Wales and Northern Ireland.",
   },
   "/apply": {
     title: "Apply for a Sponsored UK Care Job | Free Application — CareHomeStaffUK",
     description:
       "Free application for sponsored UK care worker jobs. Open to international applicants, PSW/graduate visa switchers, dependants, spouses and BRP holders. Upload your CV — our team replies within 48h.",
   },
+  "/apply-for-cos": {
+    title: "Apply for a Certificate of Sponsorship (CoS) UK 2026 | CareHomeStaffUK",
+    description:
+      "Apply for a UK Certificate of Sponsorship with licensed care sponsors. One general application covers care assistant, senior carer, HCA and nursing auxiliary roles under the Health & Care Worker visa.",
+  },
   "/visa-info": {
     title: "Health and Care Worker Visa UK 2026 | Sponsorship Guide & Requirements",
     description:
       "Complete 2026 guide to the UK Health and Care Worker visa: salary thresholds, IELTS/English, dependants, switching from student, PSW or spouse visa, Certificate of Sponsorship process, costs and timelines.",
+  },
+  "/certificate-of-sponsorship-guide": {
+    title: "Certificate of Sponsorship (CoS) Guide UK 2026 | How CoS Works",
+    description:
+      "What a Certificate of Sponsorship is, who can issue one, how long a CoS takes, what it costs, and how to use your CoS reference number to apply for the UK Health & Care Worker visa.",
+  },
+  "/health-and-care-worker-visa": {
+    title: "Health and Care Worker Visa 2026 | Eligibility, Salary & Switching",
+    description:
+      "Health and Care Worker visa explained for 2026: eligible SOC codes, salary thresholds, English requirement, dependants rules, in-country switching from Graduate/PSW and student visas, and settlement.",
   },
   "/about": {
     title: "About CareHomeStaffUK | Ethical UK Care Recruitment & Visa Sponsorship",
@@ -89,6 +111,11 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     title: "FAQ | UK Care Worker Visa, Sponsorship & Care Home Jobs",
     description:
       "Answers to common questions: How to get a UK care worker visa? Salary thresholds? Switching from PSW or student visa? Bringing dependants? Costs, timelines, IELTS, CoS — explained.",
+  },
+  "/uk-visa-sponsorship-faq": {
+    title: "UK Visa Sponsorship FAQ 2026 | CoS, Salary, Switching & Dependants",
+    description:
+      "Frequently asked questions about UK visa sponsorship: how to get a Certificate of Sponsorship, minimum salaries, English requirements, dependants, switching from PSW, student or spouse visas, and timelines.",
   },
   "/testimonials": {
     title: "Testimonials | UK Care Worker Visa Success Stories — CareHomeStaffUK",
@@ -137,21 +164,98 @@ const pageMeta: Record<string, { title: string; description: string }> = {
   },
 };
 
+/** Reusable question bank — powers FAQPage rich results on the FAQ, visa and apply routes. */
+export const UK_VISA_FAQS: { q: string; a: string }[] = [
+  {
+    q: "How do I apply for a Certificate of Sponsorship (CoS) in the UK?",
+    a: "You cannot apply for a CoS yourself. A UK employer holding a Home Office sponsor licence assigns it to you after offering you a job. Submit one application through CareHomeStaffUK and our team matches you with a licensed care sponsor who assigns the CoS reference number you then use in your visa application.",
+  },
+  {
+    q: "Can I switch from a Graduate (PSW) visa to the Health and Care Worker visa?",
+    a: "Yes. Graduate/PSW holders can switch in-country to the Health and Care Worker visa once a licensed sponsor assigns a Certificate of Sponsorship. You do not need to leave the UK to switch.",
+  },
+  {
+    q: "Can I switch from a student visa to a UK care worker visa?",
+    a: "Students can usually switch once their course has finished, or from the course completion date shown on their CAS, provided a licensed sponsor has assigned a CoS for an eligible role.",
+  },
+  {
+    q: "What is the minimum salary for a UK care worker visa in 2026?",
+    a: "Health and Care Worker roles use role-specific going rates rather than a single figure. Our team confirms the exact threshold for each vacancy at the time the Certificate of Sponsorship is assigned, so your application is never under the required rate.",
+  },
+  {
+    q: "Do I need IELTS for the Health and Care Worker visa?",
+    a: "You need approved English at CEFR level B1. IELTS for UKVI, a degree taught in English, or holding a majority English-speaking nationality all satisfy the requirement.",
+  },
+  {
+    q: "Can I bring my family on the Health and Care Worker visa?",
+    a: "Care worker (SOC 6135) and senior care worker (SOC 6136) applicants who applied after 11 March 2024 cannot bring new dependants. Pre-existing dependants and nursing auxiliary (SOC 6131) applicants may still qualify — we confirm eligibility case by case.",
+  },
+  {
+    q: "How long does it take to get a CoS and a UK visa decision?",
+    a: "Once an employer confirms an offer, a defined or undefined CoS is typically assigned within a few working days. Entry-clearance visa decisions usually take about three weeks, and in-country switching decisions about eight weeks, or faster with priority services.",
+  },
+  {
+    q: "Which SOC codes are eligible for care visa sponsorship?",
+    a: "SOC 6131 (nursing auxiliaries and assistants), SOC 6135 (care workers and home carers) and SOC 6136 (senior care workers) are the main eligible occupations for the UK Health and Care Worker visa.",
+  },
+  {
+    q: "Do I have to pay for a Certificate of Sponsorship?",
+    a: "Sponsor licence and CoS assignment costs are the employer's responsibility and must never be recharged to a worker. Applicants are responsible only for their own visa fee, immigration health surcharge, biometrics, and any optional legal or priority services they choose.",
+  },
+  {
+    q: "Can I apply for UK care work sponsorship from Nigeria, India, Ghana, Kenya or the Philippines?",
+    a: "Yes. We work with candidates worldwide, including Nigeria, India, Ghana, Kenya, Zimbabwe, Pakistan, Bangladesh, Nepal and the Philippines, as well as applicants already in the UK on other visa routes.",
+  },
+];
+
+const FAQ_ROUTES = new Set([
+  "/faq",
+  "/uk-visa-sponsorship-faq",
+  "/visa-info",
+  "/certificate-of-sponsorship-guide",
+  "/health-and-care-worker-visa",
+  "/apply",
+  "/apply-for-cos",
+]);
+
+function resolveMetaKey(pathname: string) {
+  if (pathname.startsWith("/appointments/manage")) return "/appointments/manage";
+  if (pathname.startsWith("/jobs/") && pathname !== "/jobs") return "/jobs";
+  return pathname;
+}
 
 export function SEOHead() {
   const { pathname } = useLocation();
-  // Match dynamic /appointments/manage/:id and /jobs/:slug
-  let metaKey = pathname;
-  if (pathname.startsWith("/appointments/manage")) metaKey = "/appointments/manage";
-  if (pathname.startsWith("/jobs/") && pathname !== "/jobs") metaKey = "/jobs";
+  const [origin, setOrigin] = useState(() => getSiteOrigin());
+  const [verification, setVerification] = useState("");
+
+  // Pull the admin-configured live domain (cached to localStorage by the store),
+  // so canonicals/og:url/JSON-LD always reflect the current public domain.
+  useEffect(() => {
+    let cancelled = false;
+    getSEOSettings()
+      .then((s) => {
+        if (cancelled) return;
+        setVerification(s.searchConsoleId || "");
+        setOrigin(getSiteOrigin());
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const metaKey = resolveMetaKey(pathname);
   const meta = pageMeta[metaKey] || pageMeta["/"]!;
-  const canonicalUrl = `${SITE_URL}${pathname === "/" ? "" : pathname}`;
+  const canonicalUrl = absoluteUrl(pathname === "/" ? "/" : pathname, origin);
+  const noIndex = pathname.startsWith("/bestadmin") || pathname.startsWith("/setup");
 
   const orgJsonLd = {
     "@context": "https://schema.org",
     "@type": "EmploymentAgency",
+    "@id": `${origin}/#organization`,
     name: SITE_NAME,
-    url: SITE_URL,
+    url: origin,
     description:
       "Ethical UK recruitment agency for care homes — sponsoring Health and Care Worker visas for carers, healthcare assistants, senior carers and nursing auxiliaries (SOC 6131, 6135, 6136). Supports PSW, student, dependant and spouse visa switchers.",
     address: { "@type": "PostalAddress", addressCountry: "GB" },
@@ -165,6 +269,7 @@ export function SEOHead() {
       "SOC 6135 Care Workers and Home Carers",
       "SOC 6136 Senior Care Workers",
       "Health and Care Worker Visa UK",
+      "Certificate of Sponsorship (CoS) assignment",
       "Skilled Worker visa switch from Graduate / PSW visa",
       "Student visa to care worker visa switch",
       "Dependant and spouse visa care work",
@@ -172,38 +277,24 @@ export function SEOHead() {
     ],
   };
 
-  const faqJsonLd = metaKey === "/faq" || metaKey === "/visa-info" ? {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "Can I switch from a Graduate (PSW) visa to a Health and Care Worker visa?",
-        acceptedAnswer: { "@type": "Answer", text: "Yes. PSW holders can switch in-country to the Health & Care Worker visa once they hold a Certificate of Sponsorship from a licensed UK care employer. CareHomeStaffUK helps PSW switchers find sponsoring care homes." },
-      },
-      {
-        "@type": "Question",
-        name: "What is the minimum salary for a UK care worker visa in 2026?",
-        acceptedAnswer: { "@type": "Answer", text: "Care worker and senior care worker roles under the Health & Care Worker visa have role-specific thresholds. Our team confirms the current threshold per vacancy at the time of CoS issue." },
-      },
-      {
-        "@type": "Question",
-        name: "Do I need IELTS to apply?",
-        acceptedAnswer: { "@type": "Answer", text: "You need approved English at B1 level — IELTS for UKVI, a degree taught in English, or an exempt nationality all qualify." },
-      },
-      {
-        "@type": "Question",
-        name: "Can I bring my family on the Health and Care Worker visa?",
-        acceptedAnswer: { "@type": "Answer", text: "New care worker (SOC 6135) and senior carer (SOC 6136) applicants since 11 March 2024 cannot bring new dependants. Pre-existing dependants and nursing auxiliary applicants (SOC 6131) may still apply — we confirm eligibility case-by-case." },
-      },
-    ],
-  } : null;
+  const faqJsonLd = FAQ_ROUTES.has(metaKey)
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${canonicalUrl}#faq`,
+        mainEntity: UK_VISA_FAQS.map(({ q, a }) => ({
+          "@type": "Question",
+          name: q,
+          acceptedAnswer: { "@type": "Answer", text: a },
+        })),
+      }
+    : null;
 
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
       ...(pathname !== "/"
         ? [{ "@type": "ListItem", position: 2, name: meta.title.split("|")[0]!.trim(), item: canonicalUrl }]
         : []),
@@ -213,23 +304,47 @@ export function SEOHead() {
   const websiteLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: SITE_URL,
+    "@id": `${origin}/#website`,
+    url: origin,
     name: SITE_NAME,
     inLanguage: "en-GB",
+    publisher: { "@id": `${origin}/#organization` },
     potentialAction: {
       "@type": "SearchAction",
-      target: `${SITE_URL}/jobs?q={search_term_string}`,
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${origin}/jobs?q={search_term_string}`,
+      },
       "query-input": "required name=search_term_string",
     },
   };
 
+  const webPageLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonicalUrl}#webpage`,
+    url: canonicalUrl,
+    name: meta.title,
+    description: meta.description,
+    inLanguage: "en-GB",
+    isPartOf: { "@id": `${origin}/#website` },
+    about: { "@id": `${origin}/#organization` },
+  };
+
   return (
     <Helmet>
+      <html lang="en-GB" />
       <title>{meta.title}</title>
       <meta name="description" content={meta.description} />
       <link rel="canonical" href={canonicalUrl} />
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-      <meta name="googlebot" content="index, follow" />
+      <link rel="alternate" hrefLang="en-GB" href={canonicalUrl} />
+      <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
+      {verification ? <meta name="google-site-verification" content={verification} /> : null}
+      <meta
+        name="robots"
+        content={noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}
+      />
+      <meta name="googlebot" content={noIndex ? "noindex, nofollow" : "index, follow"} />
       <meta name="geo.region" content="GB" />
       <meta name="geo.placename" content="United Kingdom" />
       <meta name="language" content="English" />
@@ -258,9 +373,9 @@ export function SEOHead() {
 
       <script type="application/ld+json">{JSON.stringify(orgJsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(websiteLd)}</script>
+      <script type="application/ld+json">{JSON.stringify(webPageLd)}</script>
       <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       {faqJsonLd && <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>}
     </Helmet>
   );
 }
-
