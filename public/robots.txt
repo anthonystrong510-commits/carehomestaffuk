@@ -1,7 +1,23 @@
+# CareHomeStaffUK — UK Certificate of Sponsorship (CoS) & Health and Care Worker visa jobs
+# https://carehomestaffuk.com
+
 User-agent: Googlebot
+Allow: /
+Disallow: /bestadmin
+Disallow: /setup
+
+User-agent: Googlebot-Image
 Allow: /
 
 User-agent: Bingbot
+Allow: /
+Disallow: /bestadmin
+Disallow: /setup
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Slurp
 Allow: /
 
 User-agent: Twitterbot
@@ -10,7 +26,40 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
 
+User-agent: WhatsApp
+Allow: /
+
+# AI answer engines (AEO) — allowed so UK visa/CoS questions can cite us
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: *
+Allow: /
+Disallow: /bestadmin
+Disallow: /setup
+Disallow: /appointments/manage
+
 Sitemap: https://carehomestaffuk.com/sitemap.xml
+Sitemap: https://carehomestaffuk.com/sitemap-pages.xml
+Sitemap: https://carehomestaffuk.com/sitemap-cos.xml
