@@ -1,4 +1,5 @@
 {
+  "trailingSlash": false,
   "rewrites": [
     {
       "source": "/((?!sitemap.*\\.xml|robots\\.txt|.*\\.(?:xml|txt|json|ico|png|jpg|jpeg|webp|svg|gif|css|js|map|woff2?|pdf)).*)",
