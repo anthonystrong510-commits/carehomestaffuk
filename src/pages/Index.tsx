@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { JobCard } from "@/components/JobCard";
 import { getPublicJobs, getSiteSettings, defaultSiteSettings } from "@/lib/store";
 import type { Job, SiteSettings } from "@/lib/store";
-import { Shield, Users, Heart, ArrowRight, Award, Building2, Globe2, CheckCircle2, FileText, Sparkles } from "lucide-react";
+import { Shield, Users, Heart, ArrowRight, Award, Building2, Globe2, CheckCircle2, FileText, Sparkles, ShieldCheck } from "lucide-react";
 import heroCare from "@/assets/hero-care.jpg";
 
 const features = [
@@ -207,7 +207,7 @@ const Index = () => {
                   <p className="text-muted-foreground max-w-xl mx-auto">
                     The companies listed below are independent UK employers licensed by the Home Office to issue
                     Certificates of Sponsorship for Health and Care Worker visa applicants. They are shown for
-                    reference only and are not partners or affiliates of {site?.brandName || "CareHomeStaffUK"}.
+                    reference only and are not partners or affiliates of {site?.siteName || "CareHomeStaffUK"}.
                   </p>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
