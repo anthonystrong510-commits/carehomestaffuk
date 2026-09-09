@@ -200,8 +200,15 @@ const Index = () => {
             {(site.cosPartners?.length || 0) > 0 && (
               <div>
                 <div className="text-center mb-8">
-                  <h2 className="font-heading text-2xl font-bold mb-2">Our CoS Sponsor Partners</h2>
-                  <p className="text-muted-foreground max-w-lg mx-auto">Licensed sponsor companies that issue Certificates of Sponsorship for Health and Care Worker visa applicants through our network.</p>
+                  <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary px-3 py-1 rounded-full mb-3">
+                    <ShieldCheck className="h-3.5 w-3.5" /> UK Licensed CoS Sponsors
+                  </span>
+                  <h2 className="font-heading text-2xl font-bold mb-2">UK Companies Offering CoS</h2>
+                  <p className="text-muted-foreground max-w-xl mx-auto">
+                    The companies listed below are independent UK employers licensed by the Home Office to issue
+                    Certificates of Sponsorship for Health and Care Worker visa applicants. They are shown for
+                    reference only and are not partners or affiliates of {site?.brandName || "CareHomeStaffUK"}.
+                  </p>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                   {site.cosPartners.map((p, i) => (
@@ -217,6 +224,12 @@ const Index = () => {
                     </a>
                   ))}
                 </div>
+                <p className="text-xs text-muted-foreground text-center mt-6 max-w-2xl mx-auto">
+                  Please note: All companies featured above are based in the United Kingdom and hold a valid Home
+                  Office sponsor licence enabling them to issue Certificates of Sponsorship. We are not affiliated
+                  with or endorsed by these organisations; listings are provided to help applicants identify
+                  licensed UK sponsors. Availability of sponsorship is at each employer's discretion.
+                </p>
               </div>
             )}
             {(site.careHomePartners?.length || 0) > 0 && (
