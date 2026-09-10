@@ -471,7 +471,7 @@ export async function saveSMTPSettings(settings: SMTPSettings) { await saveSetti
 
 export async function getSEOSettings(): Promise<SEOSettings> {
   const value = await getSetting('seo');
-  const out: SEOSettings = { searchConsoleId: '', searchKeywords: [], siteDomain: '', ...(value || {}) };
+  const out: SEOSettings = { searchConsoleId: '', searchKeywords: [], siteDomain: '', dnsVerificationTxt: '', ...(value || {}) };
   cacheSiteOrigin(out.siteDomain);
   return out;
 }
