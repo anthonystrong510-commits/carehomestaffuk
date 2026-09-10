@@ -1985,12 +1985,55 @@ function SiteSettingsTab() {
 }
 
 function SEOTab() {
-  const [settings, setSettings] = useState<SEOSettings>({ searchConsoleId: '', searchKeywords: [] });
+  const [settings, setSettings] = useState<SEOSettings>({ searchConsoleId: '', searchKeywords: [], siteDomain: '', dnsVerificationTxt: '' });
   const [newKeyword, setNewKeyword] = useState("");
+  const [dnsChecking, setDnsChecking] = useState(false);
+  const [dnsResult, setDnsResult] = useState<{ ok: boolean; message: string; found: string[] } | null>(null);
 
   useEffect(() => { getSEOSettings().then(setSettings); }, []);
 
   const handleSave = async () => { await saveSEOSettings(settings); toast({ title: "SEO settings saved!" }); };
+
+  const hostname = (() => {
+    const raw = (settings.siteDomain || '').trim();
+    if (!raw) return '';
+    try { return new URL(/^https?:\/\//i.test(raw) ? raw : `https://${raw}`).hostname; } catch { return ''; }
+  })();
+
+  const copy = async (value: string) => {
+    try { await navigator.clipboard.writeText(value); toast({ title: "Copied to clipboard" }); }
+    catch { toast({ title: "Could not copy", description: value, variant: "destructive" }); }
+  };
+
+  const checkDns = async () => {
+    if (!hostname) { toast({ title: "Add your live domain first", variant: "destructive" }); return; }
+    const expected = (settings.dnsVerificationTxt || '').trim();
+    if (!expected) { toast({ title: "Paste the TXT value from Search Console first", variant: "destructive" }); return; }
+    setDnsChecking(true);
+    setDnsResult(null);
+    try {
+      const res = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(hostname)}&type=TXT`);
+      const data = await res.json();
+      const found: string[] = (data?.Answer || [])
+        .map((a: { data?: string }) => (a.data || '').replace(/^"|"$/g, '').replace(/""/g, ''))
+        .filter(Boolean);
+      const norm = (v: string) => v.trim().replace(/^google-site-verification=/i, '').toLowerCase();
+      const ok = found.some(f => norm(f) === norm(expected));
+      setDnsResult({
+        ok,
+        found,
+        message: ok
+          ? `TXT record is live and publicly visible for ${hostname}. You can now press Verify in Google Search Console.`
+          : found.length
+            ? `The record was not found yet on ${hostname}. DNS is answering, but none of the published TXT values match. Check for typos, make sure the record host is @ (root), and allow up to a few hours.`
+            : `No TXT records are published for ${hostname} yet. Add the record at your DNS provider (Cloudflare), then check again.`,
+      });
+    } catch {
+      setDnsResult({ ok: false, found: [], message: "Could not reach the DNS lookup service. Try again in a moment." });
+    } finally {
+      setDnsChecking(false);
+    }
+  };
   const addKeyword = () => {
     const kw = newKeyword.trim();
     if (!kw) return;
