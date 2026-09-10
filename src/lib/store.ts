@@ -84,6 +84,8 @@ export interface SEOSettings {
   searchKeywords: string[];
   /** Live public domain used for canonicals, og:url, JSON-LD and sitemap links. */
   siteDomain?: string;
+  /** Google Search Console DNS TXT verification value (google-site-verification=...). */
+  dnsVerificationTxt?: string;
 }
 
 
