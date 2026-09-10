@@ -1985,12 +1985,55 @@ function SiteSettingsTab() {
 }
 
 function SEOTab() {
-  const [settings, setSettings] = useState<SEOSettings>({ searchConsoleId: '', searchKeywords: [] });
+  const [settings, setSettings] = useState<SEOSettings>({ searchConsoleId: '', searchKeywords: [], siteDomain: '', dnsVerificationTxt: '' });
   const [newKeyword, setNewKeyword] = useState("");
+  const [dnsChecking, setDnsChecking] = useState(false);
+  const [dnsResult, setDnsResult] = useState<{ ok: boolean; message: string; found: string[] } | null>(null);
 
   useEffect(() => { getSEOSettings().then(setSettings); }, []);
 
   const handleSave = async () => { await saveSEOSettings(settings); toast({ title: "SEO settings saved!" }); };
+
+  const hostname = (() => {
+    const raw = (settings.siteDomain || '').trim();
+    if (!raw) return '';
+    try { return new URL(/^https?:\/\//i.test(raw) ? raw : `https://${raw}`).hostname; } catch { return ''; }
+  })();
+
+  const copy = async (value: string) => {
+    try { await navigator.clipboard.writeText(value); toast({ title: "Copied to clipboard" }); }
+    catch { toast({ title: "Could not copy", description: value, variant: "destructive" }); }
+  };
+
+  const checkDns = async () => {
+    if (!hostname) { toast({ title: "Add your live domain first", variant: "destructive" }); return; }
+    const expected = (settings.dnsVerificationTxt || '').trim();
+    if (!expected) { toast({ title: "Paste the TXT value from Search Console first", variant: "destructive" }); return; }
+    setDnsChecking(true);
+    setDnsResult(null);
+    try {
+      const res = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(hostname)}&type=TXT`);
+      const data = await res.json();
+      const found: string[] = (data?.Answer || [])
+        .map((a: { data?: string }) => (a.data || '').replace(/^"|"$/g, '').replace(/""/g, ''))
+        .filter(Boolean);
+      const norm = (v: string) => v.trim().replace(/^google-site-verification=/i, '').toLowerCase();
+      const ok = found.some(f => norm(f) === norm(expected));
+      setDnsResult({
+        ok,
+        found,
+        message: ok
+          ? `TXT record is live and publicly visible for ${hostname}. You can now press Verify in Google Search Console.`
+          : found.length
+            ? `The record was not found yet on ${hostname}. DNS is answering, but none of the published TXT values match. Check for typos, make sure the record host is @ (root), and allow up to a few hours.`
+            : `No TXT records are published for ${hostname} yet. Add the record at your DNS provider (Cloudflare), then check again.`,
+      });
+    } catch {
+      setDnsResult({ ok: false, found: [], message: "Could not reach the DNS lookup service. Try again in a moment." });
+    } finally {
+      setDnsChecking(false);
+    }
+  };
   const addKeyword = () => {
     const kw = newKeyword.trim();
     if (!kw) return;
@@ -2005,8 +2048,63 @@ function SEOTab() {
       <h1 className="font-heading text-2xl font-bold">SEO & Search Console</h1>
       <div className="bg-card rounded-lg border p-4 sm:p-6 space-y-6 max-w-2xl">
         <div>
+          <Label>Live domain</Label>
+          <Input value={settings.siteDomain || ''} onChange={e => setSettings(s => ({ ...s, siteDomain: e.target.value }))} placeholder="carehomestaffuk.com" />
+          <p className="text-xs text-muted-foreground mt-1">Used for page addresses, sitemaps and the DNS check below.</p>
+        </div>
+        <div>
           <Label>Google Search Console Verification ID</Label>
           <Input value={settings.searchConsoleId} onChange={e => setSettings(s => ({ ...s, searchConsoleId: e.target.value }))} placeholder="e.g. abc123xyz..." />
+          <p className="text-xs text-muted-foreground mt-1">Only used for the HTML tag method. Google reads it after the page loads, so the DNS method below is the reliable one.</p>
+        </div>
+
+        <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
+          <div>
+            <Label>Verify domain ownership via DNS record</Label>
+            <p className="text-xs text-muted-foreground mt-1">
+              In Search Console choose Domain, copy the TXT value it shows, paste it here, then add it at your DNS provider and check below.
+            </p>
+          </div>
+          <Input
+            value={settings.dnsVerificationTxt || ''}
+            onChange={e => { setSettings(s => ({ ...s, dnsVerificationTxt: e.target.value })); setDnsResult(null); }}
+            placeholder="google-site-verification=xxxxxxxxxxxxxxxxxxxx"
+          />
+          <div className="text-xs space-y-1 rounded-md bg-background border p-3">
+            <p className="font-medium">Record to add at your DNS provider</p>
+            <p>Type: <span className="font-mono">TXT</span></p>
+            <p className="flex flex-wrap items-center gap-2">
+              Name / Host: <span className="font-mono">@</span>
+              {hostname ? <span className="text-muted-foreground">({hostname})</span> : null}
+            </p>
+            <p className="break-all">Value: <span className="font-mono">{settings.dnsVerificationTxt || '—'}</span></p>
+            <p className="text-muted-foreground">TTL: Auto. If you use Cloudflare, TXT records are never proxied, so no orange cloud is needed.</p>
+            {settings.dnsVerificationTxt ? (
+              <Button type="button" variant="outline" size="sm" className="mt-1" onClick={() => copy(settings.dnsVerificationTxt || '')}>
+                Copy TXT value
+              </Button>
+            ) : null}
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button type="button" onClick={checkDns} disabled={dnsChecking} className="bg-primary text-primary-foreground">
+              {dnsChecking ? "Checking..." : "Check DNS record"}
+            </Button>
+            <span className="text-xs text-muted-foreground">Checks what the public internet currently sees.</span>
+          </div>
+          {dnsResult && (
+            <div className={`text-xs rounded-md p-3 border ${dnsResult.ok ? 'border-primary/40 bg-primary/10' : 'border-destructive/40 bg-destructive/10'}`}>
+              <p className="font-medium">{dnsResult.ok ? "Record found" : "Not found yet"}</p>
+              <p className="mt-1">{dnsResult.message}</p>
+              {dnsResult.found.length > 0 && (
+                <div className="mt-2">
+                  <p className="font-medium">Currently published TXT records:</p>
+                  <ul className="list-disc pl-4 mt-1 space-y-0.5 break-all">
+                    {dnsResult.found.map(f => <li key={f} className="font-mono">{f}</li>)}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
         </div>
         <div>
           <Label>Target Keywords</Label>

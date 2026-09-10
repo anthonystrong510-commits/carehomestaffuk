@@ -84,6 +84,8 @@ export interface SEOSettings {
   searchKeywords: string[];
   /** Live public domain used for canonicals, og:url, JSON-LD and sitemap links. */
   siteDomain?: string;
+  /** Google Search Console DNS TXT verification value (google-site-verification=...). */
+  dnsVerificationTxt?: string;
 }
 
 
@@ -469,7 +471,7 @@ export async function saveSMTPSettings(settings: SMTPSettings) { await saveSetti
 
 export async function getSEOSettings(): Promise<SEOSettings> {
   const value = await getSetting('seo');
-  const out: SEOSettings = { searchConsoleId: '', searchKeywords: [], siteDomain: '', ...(value || {}) };
+  const out: SEOSettings = { searchConsoleId: '', searchKeywords: [], siteDomain: '', dnsVerificationTxt: '', ...(value || {}) };
   cacheSiteOrigin(out.siteDomain);
   return out;
 }
