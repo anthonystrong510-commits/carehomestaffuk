@@ -2,7 +2,23 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/((?!sitemap.*\\.xml|robots\\.txt|.*\\.(?:xml|txt|json|ico|png|jpg|jpeg|webp|svg|gif|css|js|map|woff2?|pdf)).*)",
+      "source": "/sitemap.xml",
+      "destination": "https://gqpngcijtlbpjdijmjkp.supabase.co/functions/v1/sitemap?file=sitemap.xml"
+    },
+    {
+      "source": "/sitemap-pages.xml",
+      "destination": "https://gqpngcijtlbpjdijmjkp.supabase.co/functions/v1/sitemap?file=sitemap-pages.xml"
+    },
+    {
+      "source": "/sitemap-cos.xml",
+      "destination": "https://gqpngcijtlbpjdijmjkp.supabase.co/functions/v1/sitemap?file=sitemap-cos.xml"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "https://gqpngcijtlbpjdijmjkp.supabase.co/functions/v1/sitemap?file=robots.txt"
+    },
+    {
+      "source": "/((?!.*\\.(?:xml|txt|json|ico|png|jpg|jpeg|webp|svg|gif|css|js|map|woff2?|pdf)).*)",
       "destination": "/index.html"
     }
   ],
@@ -35,25 +51,6 @@
         { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
         { "key": "Cache-Control", "value": "no-store" }
       ]
-    },
-    {
-      "source": "/sitemap.xml",
-      "headers": [
-        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
-      ]
-    },
-    {
-      "source": "/sitemap-pages.xml",
-      "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }]
-    },
-    {
-      "source": "/sitemap-cos.xml",
-      "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }]
-    },
-    {
-      "source": "/robots.txt",
-      "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
     }
   ]
 }
