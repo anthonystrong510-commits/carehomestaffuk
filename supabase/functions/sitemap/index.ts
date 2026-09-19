@@ -122,7 +122,7 @@ Deno.serve(async (req) => {
       const { data: jobs } = await supabase.from('jobs').select('slug, created_at').eq('is_active', true);
       for (const j of jobs || []) {
         if (!j.slug) continue;
-        const lastmod = (j.updated_at || j.created_at || '').slice(0, 10);
+        const lastmod = (j.created_at || '').slice(0, 10);
         entries.push([
           '  <url>',
           `    <loc>${base}/jobs/${xmlEscape(j.slug)}</loc>`,
