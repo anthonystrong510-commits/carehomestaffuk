@@ -1,5 +1,5 @@
 # CareHomeStaffUK — UK Certificate of Sponsorship (CoS) & Health and Care Worker visa jobs
-# https://carehomestaffuk.com
+# https://assistantjobuk.online
 
 User-agent: Googlebot
 Allow: /
@@ -76,6 +76,6 @@ Disallow: /bestadmin
 Disallow: /setup
 Disallow: /appointments/manage
 
-Sitemap: https://carehomestaffuk.com/sitemap.xml
-Sitemap: https://carehomestaffuk.com/sitemap-pages.xml
-Sitemap: https://carehomestaffuk.com/sitemap-cos.xml
+Sitemap: https://assistantjobuk.online/sitemap.xml
+
+

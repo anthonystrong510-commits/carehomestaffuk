@@ -10,7 +10,7 @@
  */
 
 export const SEO_DOMAIN_STORAGE_KEY = "seo_site_domain";
-const FALLBACK_ORIGIN = "https://carehomestaffuk.com";
+const FALLBACK_ORIGIN = "https://assistantjobuk.online";
 
 /** Normalise anything the admin types ("example.com", "https://example.com/") into an origin. */
 export function normaliseDomain(input?: string | null): string {
