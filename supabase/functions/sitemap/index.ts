@@ -67,8 +67,14 @@ Deno.serve(async (req) => {
     console.error('seo settings fetch failed', e);
   }
   if (!base) {
-    const host = url.searchParams.get('host') || req.headers.get('x-forwarded-host') || req.headers.get('host') || 'carehomestaffuk.lovable.app';
-    base = `https://${host.split(':')[0]}`;
+    const candidates = [
+      url.searchParams.get('host'),
+      req.headers.get('x-forwarded-host'),
+      req.headers.get('host'),
+    ];
+    const bad = /supabase|edge-runtime|localhost|127\.0\.0\.1/i;
+    const host = candidates.find((h) => h && !bad.test(h)) || 'assistantjobuk.online';
+    base = `https://${host.split(':')[0].replace(/^www\./, '')}`;
   }
 
   if (file === 'robots.txt') {
