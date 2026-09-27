@@ -46,6 +46,7 @@ const COS_ROUTES: Array<[string, string, string]> = [
   ['/sponsor-companies', 'weekly', '0.95'],
   ['/cos-sponsors', 'weekly', '0.9'],
   ['/visa-info', 'weekly', '0.9'],
+  ['/cos-guide', 'weekly', '0.95'],
 ];
 
 Deno.serve(async (req) => {
