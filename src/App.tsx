@@ -25,6 +25,7 @@ import BookAppointmentPage from "./pages/BookAppointmentPage.tsx";
 import AppointmentManagePage from "./pages/AppointmentManagePage.tsx";
 import CVBuilderPage from "./pages/CVBuilderPage.tsx";
 import SponsorCompaniesPage from "./pages/SponsorCompaniesPage.tsx";
+import CosGuidePage from "./pages/CosGuidePage";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -59,6 +60,7 @@ const App = () => (
             <Route path="/cover-letter" element={<CVBuilderPage />} />
             <Route path="/sponsor-companies" element={<SponsorCompaniesPage />} />
             <Route path="/cos-sponsors" element={<SponsorCompaniesPage />} />
+            <Route path="/cos-guide" element={<CosGuidePage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <CookieConsent />
