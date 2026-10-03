@@ -54,6 +54,42 @@ const GLOBAL_KEYWORDS = [
   // Recruitment & agency
   "UK care recruitment agency", "ethical international recruitment UK",
   "NHS care worker recruitment", "care home staffing UK", "CQC-registered care recruiter",
+  // CoS deep-dive & process terms
+  "certificate of sponsorship reference number", "defined certificate of sponsorship",
+  "undefined certificate of sponsorship", "how long is a CoS valid for",
+  "CoS application processing time", "assign certificate of sponsorship",
+  "sponsor management system SMS UK", "immigration salary list care worker",
+  "health and care visa salary threshold 2026", "care worker visa extension UK",
+  "care worker visa renewal UK", "change employer care worker visa UK",
+  "new CoS change of employer", "supplementary employment care worker visa",
+  "ILR after health and care visa", "settlement care worker visa UK",
+  "visa sponsorship jobs UK no experience", "urgent care worker jobs UK visa sponsorship",
+  "care home sponsor licence list 2026", "register of licensed sponsors workers",
+  // More audiences & origins
+  "South Africa to UK care worker visa", "Uganda to UK care worker visa",
+  "Cameroon to UK care worker", "Jamaica to UK care worker visa",
+  "Sri Lanka care jobs UK sponsorship", "UAE to UK care worker visa",
+  "Saudi Arabia to UK care visa", "Hong Kong BN(O) care jobs UK",
+  "Ukraine scheme care work UK", "skilled worker visa from abroad care",
+  // More locations
+  "care jobs Leicester", "care jobs Coventry", "care jobs Bradford",
+  "care jobs Stoke-on-Trent", "care jobs Wolverhampton", "care jobs Plymouth",
+  "care jobs Southampton", "care jobs Reading", "care jobs Derby",
+  "care jobs Luton", "care jobs Milton Keynes", "care jobs Northampton",
+  "care jobs Wales sponsorship", "care jobs Scotland sponsorship",
+  "care jobs Northern Ireland sponsorship", "care jobs England visa sponsorship",
+  // More roles & settings
+  "care home manager jobs UK sponsorship", "registered nurse jobs UK sponsorship",
+  "nursing home jobs UK visa sponsorship", "residential care worker jobs UK",
+  "night carer jobs UK sponsorship", "bank care assistant jobs UK",
+  "activities coordinator care home jobs", "care home cook jobs UK sponsorship",
+  "home care worker sponsorship UK", "personal assistant care jobs UK",
+  // Long-tail questions
+  "which care homes sponsor visas in UK", "list of care homes sponsoring visas 2026",
+  "how much is health and care worker visa fee", "health and care visa IHS exemption",
+  "can I work in UK care home without experience", "care worker visa age limit UK",
+  "care certificate equivalent for visa UK", "NVQ level 2 care visa requirement",
+  "DBS check for overseas care workers", "how to prove English for care visa",
 ].join(", ");
 
 const pageMeta: Record<string, { title: string; description: string }> = {
