@@ -349,6 +349,36 @@ export function SEOHead() {
     about: { "@id": `${origin}/#organization` },
   };
 
+  // Richer page-type schema: collection pages for listings, Article for the CoS guide.
+  const collectionLd =
+    metaKey === "/jobs" || metaKey === "/sponsor-companies" || metaKey === "/cos-sponsors"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": `${canonicalUrl}#collection`,
+          url: canonicalUrl,
+          name: meta.title,
+          description: meta.description,
+          inLanguage: "en-GB",
+          isPartOf: { "@id": `${origin}/#website` },
+        }
+      : null;
+
+  const articleLd =
+    metaKey === "/cos-guide" || metaKey === "/visa-info"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "@id": `${canonicalUrl}#article`,
+          headline: meta.title,
+          description: meta.description,
+          inLanguage: "en-GB",
+          author: { "@id": `${origin}/#organization` },
+          publisher: { "@id": `${origin}/#organization` },
+          mainEntityOfPage: { "@id": `${canonicalUrl}#webpage` },
+        }
+      : null;
+
   return (
     <Helmet>
       <html lang="en-GB" />
