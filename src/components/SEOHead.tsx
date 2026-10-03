@@ -411,11 +411,17 @@ export function SEOHead() {
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="en_GB" />
       <meta property="og:locale:alternate" content="en_US" />
+      <meta property="og:image" content={OG_IMAGE} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content="CareHomeStaffUK — UK care jobs with visa sponsorship" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={meta.title} />
       <meta name="twitter:description" content={meta.description} />
       <meta name="twitter:site" content="@CareHomeStaffUK" />
+      <meta name="twitter:image" content={OG_IMAGE} />
+      <meta name="twitter:image:alt" content="CareHomeStaffUK — UK care jobs with visa sponsorship" />
 
       <meta name="keywords" content={GLOBAL_KEYWORDS} />
 
@@ -423,6 +429,8 @@ export function SEOHead() {
       <script type="application/ld+json">{JSON.stringify(websiteLd)}</script>
       <script type="application/ld+json">{JSON.stringify(webPageLd)}</script>
       <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
+      {collectionLd && <script type="application/ld+json">{JSON.stringify(collectionLd)}</script>}
+      {articleLd && <script type="application/ld+json">{JSON.stringify(articleLd)}</script>}
       {faqJsonLd && <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>}
     </Helmet>
   );
