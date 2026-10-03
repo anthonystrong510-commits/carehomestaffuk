@@ -133,11 +133,6 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     description:
       "Answers to common questions: How to get a UK care worker visa? Salary thresholds? Switching from PSW or student visa? Bringing dependants? Costs, timelines, IELTS, CoS — explained.",
   },
-  "/uk-visa-sponsorship-faq": {
-    title: "UK Visa Sponsorship FAQ 2026 | CoS, Salary, Switching & Dependants",
-    description:
-      "Frequently asked questions about UK visa sponsorship: how to get a Certificate of Sponsorship, minimum salaries, English requirements, dependants, switching from PSW, student or spouse visas, and timelines.",
-  },
   "/testimonials": {
     title: "Testimonials | UK Care Worker Visa Success Stories — CareHomeStaffUK",
     description:
@@ -231,13 +226,15 @@ export const UK_VISA_FAQS: { q: string; a: string }[] = [
 
 const FAQ_ROUTES = new Set([
   "/faq",
-  "/uk-visa-sponsorship-faq",
   "/visa-info",
-  "/certificate-of-sponsorship-guide",
-  "/health-and-care-worker-visa",
+  "/cos-guide",
   "/apply",
-  "/apply-for-cos",
+  "/jobs",
+  "/sponsor-companies",
 ]);
+
+const OG_IMAGE =
+  "https://storage.googleapis.com/gpt-engineer-file-uploads/2STcIqlYPUhyTasQB8xCOPI7grk2/social-images/social-1774608593485-download.webp";
 
 function resolveMetaKey(pathname: string) {
   if (pathname.startsWith("/appointments/manage")) return "/appointments/manage";
