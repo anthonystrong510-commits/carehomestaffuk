@@ -103,10 +103,10 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     description:
       "Browse live UK care jobs with visa sponsorship — care assistants, senior carers, HCAs and nursing auxiliaries. Filter by city, SOC code and salary. Sponsored roles for international applicants & PSW switchers.",
   },
-  "/care-worker-jobs-with-visa-sponsorship": {
-    title: "Care Worker Jobs with Visa Sponsorship UK 2026 | Sponsored Vacancies",
+  "/cos-guide": {
+    title: "Certificate of Sponsorship (CoS) Guide UK 2026 | How to Get a CoS",
     description:
-      "Live care worker jobs with UK visa sponsorship in 2026. Licensed sponsors hiring care assistants, senior carers and HCAs on the Health & Care Worker visa across England, Scotland, Wales and Northern Ireland.",
+      "Complete UK Certificate of Sponsorship guide 2026: defined vs undefined CoS, CoS cost, validity, reference number, SOC 6131/6135/6136 care codes, switching from PSW or student visa, and how to apply for CoS online.",
   },
   "/apply": {
     title: "Apply for a Sponsored UK Care Job | Free Application — CareHomeStaffUK",
