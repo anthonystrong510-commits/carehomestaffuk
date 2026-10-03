@@ -113,25 +113,10 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     description:
       "Free application for sponsored UK care worker jobs. Open to international applicants, PSW/graduate visa switchers, dependants, spouses and BRP holders. Upload your CV — our team replies within 48h.",
   },
-  "/apply-for-cos": {
-    title: "Apply for a Certificate of Sponsorship (CoS) UK 2026 | CareHomeStaffUK",
-    description:
-      "Apply for a UK Certificate of Sponsorship with licensed care sponsors. One general application covers care assistant, senior carer, HCA and nursing auxiliary roles under the Health & Care Worker visa.",
-  },
   "/visa-info": {
-    title: "Health and Care Worker Visa UK 2026 | Sponsorship Guide & Requirements",
+    title: "Health and Care Worker Visa UK 2026 | Eligibility, Salary & Switching",
     description:
-      "Complete 2026 guide to the UK Health and Care Worker visa: salary thresholds, IELTS/English, dependants, switching from student, PSW or spouse visa, Certificate of Sponsorship process, costs and timelines.",
-  },
-  "/certificate-of-sponsorship-guide": {
-    title: "Certificate of Sponsorship (CoS) Guide UK 2026 | How CoS Works",
-    description:
-      "What a Certificate of Sponsorship is, who can issue one, how long a CoS takes, what it costs, and how to use your CoS reference number to apply for the UK Health & Care Worker visa.",
-  },
-  "/health-and-care-worker-visa": {
-    title: "Health and Care Worker Visa 2026 | Eligibility, Salary & Switching",
-    description:
-      "Health and Care Worker visa explained for 2026: eligible SOC codes, salary thresholds, English requirement, dependants rules, in-country switching from Graduate/PSW and student visas, and settlement.",
+      "Complete 2026 guide to the UK Health and Care Worker visa: eligible SOC codes, salary thresholds, IELTS/English requirement, dependants rules, switching from Graduate/PSW, student or spouse visa, CoS process, costs and settlement.",
   },
   "/about": {
     title: "About CareHomeStaffUK | Ethical UK Care Recruitment & Visa Sponsorship",
