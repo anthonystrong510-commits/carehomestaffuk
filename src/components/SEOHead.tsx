@@ -54,6 +54,42 @@ const GLOBAL_KEYWORDS = [
   // Recruitment & agency
   "UK care recruitment agency", "ethical international recruitment UK",
   "NHS care worker recruitment", "care home staffing UK", "CQC-registered care recruiter",
+  // CoS deep-dive & process terms
+  "certificate of sponsorship reference number", "defined certificate of sponsorship",
+  "undefined certificate of sponsorship", "how long is a CoS valid for",
+  "CoS application processing time", "assign certificate of sponsorship",
+  "sponsor management system SMS UK", "immigration salary list care worker",
+  "health and care visa salary threshold 2026", "care worker visa extension UK",
+  "care worker visa renewal UK", "change employer care worker visa UK",
+  "new CoS change of employer", "supplementary employment care worker visa",
+  "ILR after health and care visa", "settlement care worker visa UK",
+  "visa sponsorship jobs UK no experience", "urgent care worker jobs UK visa sponsorship",
+  "care home sponsor licence list 2026", "register of licensed sponsors workers",
+  // More audiences & origins
+  "South Africa to UK care worker visa", "Uganda to UK care worker visa",
+  "Cameroon to UK care worker", "Jamaica to UK care worker visa",
+  "Sri Lanka care jobs UK sponsorship", "UAE to UK care worker visa",
+  "Saudi Arabia to UK care visa", "Hong Kong BN(O) care jobs UK",
+  "Ukraine scheme care work UK", "skilled worker visa from abroad care",
+  // More locations
+  "care jobs Leicester", "care jobs Coventry", "care jobs Bradford",
+  "care jobs Stoke-on-Trent", "care jobs Wolverhampton", "care jobs Plymouth",
+  "care jobs Southampton", "care jobs Reading", "care jobs Derby",
+  "care jobs Luton", "care jobs Milton Keynes", "care jobs Northampton",
+  "care jobs Wales sponsorship", "care jobs Scotland sponsorship",
+  "care jobs Northern Ireland sponsorship", "care jobs England visa sponsorship",
+  // More roles & settings
+  "care home manager jobs UK sponsorship", "registered nurse jobs UK sponsorship",
+  "nursing home jobs UK visa sponsorship", "residential care worker jobs UK",
+  "night carer jobs UK sponsorship", "bank care assistant jobs UK",
+  "activities coordinator care home jobs", "care home cook jobs UK sponsorship",
+  "home care worker sponsorship UK", "personal assistant care jobs UK",
+  // Long-tail questions
+  "which care homes sponsor visas in UK", "list of care homes sponsoring visas 2026",
+  "how much is health and care worker visa fee", "health and care visa IHS exemption",
+  "can I work in UK care home without experience", "care worker visa age limit UK",
+  "care certificate equivalent for visa UK", "NVQ level 2 care visa requirement",
+  "DBS check for overseas care workers", "how to prove English for care visa",
 ].join(", ");
 
 const pageMeta: Record<string, { title: string; description: string }> = {
@@ -67,35 +103,20 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     description:
       "Browse live UK care jobs with visa sponsorship — care assistants, senior carers, HCAs and nursing auxiliaries. Filter by city, SOC code and salary. Sponsored roles for international applicants & PSW switchers.",
   },
-  "/care-worker-jobs-with-visa-sponsorship": {
-    title: "Care Worker Jobs with Visa Sponsorship UK 2026 | Sponsored Vacancies",
+  "/cos-guide": {
+    title: "Certificate of Sponsorship (CoS) Guide UK 2026 | How to Get a CoS",
     description:
-      "Live care worker jobs with UK visa sponsorship in 2026. Licensed sponsors hiring care assistants, senior carers and HCAs on the Health & Care Worker visa across England, Scotland, Wales and Northern Ireland.",
+      "Complete UK Certificate of Sponsorship guide 2026: defined vs undefined CoS, CoS cost, validity, reference number, SOC 6131/6135/6136 care codes, switching from PSW or student visa, and how to apply for CoS online.",
   },
   "/apply": {
     title: "Apply for a Sponsored UK Care Job | Free Application — CareHomeStaffUK",
     description:
       "Free application for sponsored UK care worker jobs. Open to international applicants, PSW/graduate visa switchers, dependants, spouses and BRP holders. Upload your CV — our team replies within 48h.",
   },
-  "/apply-for-cos": {
-    title: "Apply for a Certificate of Sponsorship (CoS) UK 2026 | CareHomeStaffUK",
-    description:
-      "Apply for a UK Certificate of Sponsorship with licensed care sponsors. One general application covers care assistant, senior carer, HCA and nursing auxiliary roles under the Health & Care Worker visa.",
-  },
   "/visa-info": {
-    title: "Health and Care Worker Visa UK 2026 | Sponsorship Guide & Requirements",
+    title: "Health and Care Worker Visa UK 2026 | Eligibility, Salary & Switching",
     description:
-      "Complete 2026 guide to the UK Health and Care Worker visa: salary thresholds, IELTS/English, dependants, switching from student, PSW or spouse visa, Certificate of Sponsorship process, costs and timelines.",
-  },
-  "/certificate-of-sponsorship-guide": {
-    title: "Certificate of Sponsorship (CoS) Guide UK 2026 | How CoS Works",
-    description:
-      "What a Certificate of Sponsorship is, who can issue one, how long a CoS takes, what it costs, and how to use your CoS reference number to apply for the UK Health & Care Worker visa.",
-  },
-  "/health-and-care-worker-visa": {
-    title: "Health and Care Worker Visa 2026 | Eligibility, Salary & Switching",
-    description:
-      "Health and Care Worker visa explained for 2026: eligible SOC codes, salary thresholds, English requirement, dependants rules, in-country switching from Graduate/PSW and student visas, and settlement.",
+      "Complete 2026 guide to the UK Health and Care Worker visa: eligible SOC codes, salary thresholds, IELTS/English requirement, dependants rules, switching from Graduate/PSW, student or spouse visa, CoS process, costs and settlement.",
   },
   "/about": {
     title: "About CareHomeStaffUK | Ethical UK Care Recruitment & Visa Sponsorship",
@@ -111,11 +132,6 @@ const pageMeta: Record<string, { title: string; description: string }> = {
     title: "FAQ | UK Care Worker Visa, Sponsorship & Care Home Jobs",
     description:
       "Answers to common questions: How to get a UK care worker visa? Salary thresholds? Switching from PSW or student visa? Bringing dependants? Costs, timelines, IELTS, CoS — explained.",
-  },
-  "/uk-visa-sponsorship-faq": {
-    title: "UK Visa Sponsorship FAQ 2026 | CoS, Salary, Switching & Dependants",
-    description:
-      "Frequently asked questions about UK visa sponsorship: how to get a Certificate of Sponsorship, minimum salaries, English requirements, dependants, switching from PSW, student or spouse visas, and timelines.",
   },
   "/testimonials": {
     title: "Testimonials | UK Care Worker Visa Success Stories — CareHomeStaffUK",
@@ -210,13 +226,15 @@ export const UK_VISA_FAQS: { q: string; a: string }[] = [
 
 const FAQ_ROUTES = new Set([
   "/faq",
-  "/uk-visa-sponsorship-faq",
   "/visa-info",
-  "/certificate-of-sponsorship-guide",
-  "/health-and-care-worker-visa",
+  "/cos-guide",
   "/apply",
-  "/apply-for-cos",
+  "/jobs",
+  "/sponsor-companies",
 ]);
+
+const OG_IMAGE =
+  "https://storage.googleapis.com/gpt-engineer-file-uploads/2STcIqlYPUhyTasQB8xCOPI7grk2/social-images/social-1774608593485-download.webp";
 
 function resolveMetaKey(pathname: string) {
   if (pathname.startsWith("/appointments/manage")) return "/appointments/manage";
@@ -331,6 +349,36 @@ export function SEOHead() {
     about: { "@id": `${origin}/#organization` },
   };
 
+  // Richer page-type schema: collection pages for listings, Article for the CoS guide.
+  const collectionLd =
+    metaKey === "/jobs" || metaKey === "/sponsor-companies" || metaKey === "/cos-sponsors"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": `${canonicalUrl}#collection`,
+          url: canonicalUrl,
+          name: meta.title,
+          description: meta.description,
+          inLanguage: "en-GB",
+          isPartOf: { "@id": `${origin}/#website` },
+        }
+      : null;
+
+  const articleLd =
+    metaKey === "/cos-guide" || metaKey === "/visa-info"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "@id": `${canonicalUrl}#article`,
+          headline: meta.title,
+          description: meta.description,
+          inLanguage: "en-GB",
+          author: { "@id": `${origin}/#organization` },
+          publisher: { "@id": `${origin}/#organization` },
+          mainEntityOfPage: { "@id": `${canonicalUrl}#webpage` },
+        }
+      : null;
+
   return (
     <Helmet>
       <html lang="en-GB" />
@@ -363,11 +411,17 @@ export function SEOHead() {
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="en_GB" />
       <meta property="og:locale:alternate" content="en_US" />
+      <meta property="og:image" content={OG_IMAGE} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content="CareHomeStaffUK — UK care jobs with visa sponsorship" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={meta.title} />
       <meta name="twitter:description" content={meta.description} />
       <meta name="twitter:site" content="@CareHomeStaffUK" />
+      <meta name="twitter:image" content={OG_IMAGE} />
+      <meta name="twitter:image:alt" content="CareHomeStaffUK — UK care jobs with visa sponsorship" />
 
       <meta name="keywords" content={GLOBAL_KEYWORDS} />
 
@@ -375,6 +429,8 @@ export function SEOHead() {
       <script type="application/ld+json">{JSON.stringify(websiteLd)}</script>
       <script type="application/ld+json">{JSON.stringify(webPageLd)}</script>
       <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
+      {collectionLd && <script type="application/ld+json">{JSON.stringify(collectionLd)}</script>}
+      {articleLd && <script type="application/ld+json">{JSON.stringify(articleLd)}</script>}
       {faqJsonLd && <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>}
     </Helmet>
   );
