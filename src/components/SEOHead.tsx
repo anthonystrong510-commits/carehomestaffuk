@@ -264,9 +264,10 @@ export function SEOHead() {
   }, []);
 
   const metaKey = resolveMetaKey(pathname);
-  const meta = pageMeta[metaKey] || pageMeta["/"]!;
+  const meta = pageMeta[metaKey] || pageMeta["/"];
+  if (!meta) return null;
   const canonicalUrl = absoluteUrl(pathname === "/" ? "/" : pathname, origin);
-  const noIndex = pathname.startsWith("/bestadmin") || pathname.startsWith("/setup");
+  const noIndex = pathname.startsWith("/bestadmin") || pathname.startsWith("/setup") || pathname.startsWith("/appointments/manage") || (!pageMeta[metaKey] && !pathname.startsWith("/jobs/"));
 
   const orgJsonLd = {
     "@context": "https://schema.org",
@@ -295,7 +296,8 @@ export function SEOHead() {
     ],
   };
 
-  const faqJsonLd = FAQ_ROUTES.has(metaKey)
+  // FAQ schema belongs to the page rendering those exact answers, not unrelated listings.
+  const faqJsonLd = false
     ? {
         "@context": "https://schema.org",
         "@type": "FAQPage",
@@ -314,7 +316,7 @@ export function SEOHead() {
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
       ...(pathname !== "/"
-        ? [{ "@type": "ListItem", position: 2, name: meta.title.split("|")[0]!.trim(), item: canonicalUrl }]
+        ? [{ "@type": "ListItem", position: 2, name: (meta.title.split("|")[0] || meta.title).trim(), item: canonicalUrl }]
         : []),
     ],
   };

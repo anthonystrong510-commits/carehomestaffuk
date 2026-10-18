@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Cookie, X } from "lucide-react";
+import { COOKIE_CONSENT_KEY, COOKIE_CONSENT_EVENT } from "@/lib/analytics";
 
-const COOKIE_KEY = "chsuk_cookie_consent";
+const COOKIE_KEY = COOKIE_CONSENT_KEY;
 
 export function CookieConsent() {
   const [visible, setVisible] = useState(false);
@@ -16,6 +17,7 @@ export function CookieConsent() {
 
   const accept = (level: "all" | "essential") => {
     localStorage.setItem(COOKIE_KEY, JSON.stringify({ level, date: new Date().toISOString() }));
+    window.dispatchEvent(new Event(COOKIE_CONSENT_EVENT));
     setVisible(false);
   };
 
@@ -44,7 +46,7 @@ export function CookieConsent() {
                 </div>
                 <div>
                   <strong className="text-foreground">Analytics Cookies:</strong> Help us understand how visitors interact with our website, 
-                  allowing us to improve our services. Data is anonymised.
+                  allowing us to improve our services. These are enabled only when you accept all cookies.
                 </div>
                 <p className="text-xs">
                   For full details, see our{" "}
