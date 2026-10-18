@@ -10,7 +10,7 @@
  */
 
 export const SEO_DOMAIN_STORAGE_KEY = "seo_site_domain";
-const FALLBACK_ORIGIN = "https://assistantjobuk.online";
+const FALLBACK_ORIGIN = "https://www.assistantjobuk.online";
 
 /** Normalise anything the admin types ("example.com", "https://example.com/") into an origin. */
 export function normaliseDomain(input?: string | null): string {
@@ -35,7 +35,7 @@ export function getSiteOrigin(): string {
   if (stored) return stored;
   const origin = window.location.origin;
   if (origin && !isPreviewHost(origin)) return origin;
-  return origin || FALLBACK_ORIGIN;
+  return FALLBACK_ORIGIN;
 }
 
 export function cacheSiteOrigin(domain?: string | null) {

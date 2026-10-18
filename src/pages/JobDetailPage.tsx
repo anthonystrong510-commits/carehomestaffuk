@@ -8,6 +8,7 @@ import { MapPin, Clock, PoundSterling, ShieldCheck } from "lucide-react";
 import { getJobBySlug, getSiteSettings } from "@/lib/store";
 import type { Job, SiteSettings } from "@/lib/store";
 import NotFound from "./NotFound";
+import { absoluteUrl, getSiteOrigin } from "@/lib/seo";
 
 function buildJobPostingJsonLd(job: Job, site: SiteSettings, canonicalUrl: string) {
   const datePosted = job.createdAt ? new Date(job.createdAt) : new Date();
@@ -44,7 +45,7 @@ function buildJobPostingJsonLd(job: Job, site: SiteSettings, canonicalUrl: strin
     baseSalary.value = value;
   }
 
-  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  const origin = getSiteOrigin();
   const logo = job.companyLogoUrl
     ? job.companyLogoUrl
     : `${origin}/placeholder.svg`;
@@ -130,8 +131,7 @@ export default function JobDetailPage() {
     return <NotFound />;
   }
 
-  const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const canonical = `${origin}/jobs/${job.slug}`;
+  const canonical = absoluteUrl(`/jobs/${job.slug}`);
   const jsonLd = site ? buildJobPostingJsonLd(job, site, canonical) : null;
   const titleSuffix = job.visaSponsorship ? " (Skilled Worker Visa Sponsorship)" : "";
 
@@ -141,6 +141,9 @@ export default function JobDetailPage() {
         <title>{`${job.title}${titleSuffix} — ${site?.siteName || ""}`}</title>
         <link rel="canonical" href={canonical} />
         <meta name="description" content={(job.description || "").slice(0, 155)} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:title" content={job.title} />
+        <meta property="og:description" content={(job.description || "").slice(0, 155)} />
         {jsonLd && (
           <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         )}

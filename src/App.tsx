@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { HelmetProvider } from "react-helmet-async";
 import { SEOHead } from "@/components/SEOHead";
 import { CookieConsent } from "@/components/CookieConsent";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import Index from "./pages/Index.tsx";
 import JobsPage from "./pages/JobsPage.tsx";
@@ -37,6 +38,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <AnalyticsTracker />
           <SEOHead />
           <Routes>
             <Route path="/" element={<Index />} />

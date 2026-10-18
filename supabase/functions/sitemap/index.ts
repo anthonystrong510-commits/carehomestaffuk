@@ -16,11 +16,9 @@ function xmlEscape(s: string) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
-const LASTMOD = '2026-10-03';
-
 function urlEntry(base: string, path: string, changefreq: string, priority: string, hreflang = false) {
   const loc = `${base}${path}`;
-  const lines = [`  <url>`, `    <loc>${xmlEscape(loc)}</loc>`, `    <lastmod>${LASTMOD}</lastmod>`];
+  const lines = [`  <url>`, `    <loc>${xmlEscape(loc)}</loc>`];
   if (hreflang) {
     lines.push(`    <xhtml:link rel="alternate" hreflang="en-GB" href="${xmlEscape(loc)}"/>`);
     lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${xmlEscape(loc)}"/>`);
@@ -77,7 +75,7 @@ Deno.serve(async (req) => {
     ];
     const bad = /supabase|edge-runtime|localhost|127\.0\.0\.1/i;
     const host = candidates.find((h) => h && !bad.test(h)) || 'assistantjobuk.online';
-    base = `https://${host.split(':')[0].replace(/^www\./, '')}`;
+    base = `https://${host.split(':')[0]}`;
   }
 
   if (file === 'robots.txt') {
@@ -107,8 +105,8 @@ Deno.serve(async (req) => {
     const body = [
       '<?xml version="1.0" encoding="UTF-8"?>',
       '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-      `  <sitemap><loc>${base}/sitemap-pages.xml</loc></sitemap>`,
-      `  <sitemap><loc>${base}/sitemap-cos.xml</loc></sitemap>`,
+      `  <sitemap><loc>${xmlEscape(base)}/sitemap-pages.xml</loc></sitemap>`,
+      `  <sitemap><loc>${xmlEscape(base)}/sitemap-cos.xml</loc></sitemap>`,
       '</sitemapindex>',
     ].join('\n');
     return new Response(body, { headers: xmlHeaders });
